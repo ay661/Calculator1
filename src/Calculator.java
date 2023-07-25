@@ -32,8 +32,10 @@ public class Calculator {
         char x=strings[1].charAt(0);
 
         if (Arrays.asList(romeNumbers).contains(num1) && Arrays.asList(romeNumbers).contains(num2)){
-            a = toArab1(num1);
-            b = toArab2(num2);
+            String num = num1;
+            a = toArab(num);
+            num = num2;
+            b = toArab(num);
             switch (x) {
                 case '+':
                     result = a + b;
@@ -85,8 +87,8 @@ public class Calculator {
         System.out.println("Результат: "+ result);
     }
 
-    private static int toArab1(String num1) {
-        switch (num1) {
+    private static int toArab(String num) {
+        switch (num) {
             case "I":
                 return 1;
             case "II":
@@ -110,29 +112,29 @@ public class Calculator {
         }
         return 0;
     }
-    private static int toArab2(String num2) {
-        switch (num2) {
-            case "I":
-                return 1;
-            case "II":
-                return 2;
-            case "III":
-                return 3;
-            case "IV":
-                return 4;
-            case "V":
-                return 5;
-            case "VI":
-                return 6;
-            case "VII":
-                return 7;
-            case "VIII":
-                return 8;
-            case "IX":
-                return 9;
-            case "X":
-                return 10;
-        }
-        return 0;
-    }
+//    private static int toArab2(String num2) {
+//        switch (num2) {
+//            case "I":
+//                return 1;
+//            case "II":
+//                return 2;
+//            case "III":
+//                return 3;
+//            case "IV":
+//                return 4;
+//            case "V":
+//                return 5;
+//            case "VI":
+//                return 6;
+//            case "VII":
+//                return 7;
+//            case "VIII":
+//                return 8;
+//            case "IX":
+//                return 9;
+//            case "X":
+//                return 10;
+//        }
+//        return 0;
+//    }
 }
