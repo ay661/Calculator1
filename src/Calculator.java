@@ -1,10 +1,26 @@
-import java.util.Scanner;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Calculator {
+
     public static void main(String[] args) {
-        String enter, num1, num2;
-        int result=0;
+
+        System.out.println("Введите строку для расчета:");
+        Scanner in = new Scanner(System.in);
+        String input = in.nextLine().toUpperCase();
+        try {
+            String result = calc(input);
+            System.out.println(result);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static String calc(String input) throws Exception {
+
+        String num1, num2;
+        int a, b;
+        int result = 0;
         String [] romeNumbers = new String[10];
 
         romeNumbers[0] = "I";
@@ -18,18 +34,14 @@ public class Calculator {
         romeNumbers[8] = "IX";
         romeNumbers[9] = "X";
 
-        Scanner in = new Scanner(System.in);
+        System.out.println("Вы написали: " + input);
+        String[] strings = input.trim().split(" ");
+        if (strings.length != 3)
+            throw new Exception("throws Exception //т.к. неверное количество операндов");
 
-        System.out.println("Введите арифметическую операцию:");
-        //ввод данных
-        enter = in.nextLine();
-        enter = enter.toUpperCase();
-        System.out.println("Вы написали: " + enter);
-        String[] strings = enter.split(" ");
-        int a, b;
         num1 = strings[0];
         num2 = strings[2];
-        char x=strings[1].charAt(0);
+        char x = strings[1].charAt(0);
 
         if (Arrays.asList(romeNumbers).contains(num1) && Arrays.asList(romeNumbers).contains(num2)){
             String num = num1;
@@ -51,16 +63,24 @@ public class Calculator {
                     break;
                 default:
                     result = 0;
-                    System.out.println("Ошибка");
+                    throw new Exception("throws Exception //т.к. формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
+                    //System.out.println("Ошибка");
             }
             if (result<=0){
-                System.out.println("Ошибка");
+                throw new Exception("throws Exception //т.к. в римской системе нет отрицательных чисел");
+                //System.out.println("Ошибка");
             }
+            return roman(result);
 
         }
         else {
-            a = Integer.parseInt(strings[0]);
-            b = Integer.parseInt(strings[2]);
+            try {
+                a = Integer.parseInt(strings[0]);
+                b = Integer.parseInt(strings[2]);
+            } catch (Exception e) {
+                throw new Exception("throws Exception //т.к. некорректный тип данных");
+            }
+
             if (a>0 && a<11 && b>0 && b<11) {
                 switch (x) {
                     case '+':
@@ -76,15 +96,17 @@ public class Calculator {
                         result = a / b;
                         break;
                     default:
-                        result = 0;
-                        System.out.println("Ошибка");
+                        throw new Exception("Некорректный знак математической операции");
+                        //System.out.println("Ошибка");
                 }
             }
             else {
-                System.out.println("Ошибка");
+                throw new Exception("Операнд вне области допустимых значений");
+                //System.out.println("Ошибка");
             }
+            return String.valueOf(result);
         }
-        System.out.println("Результат: "+ result);
+
     }
 
     private static int toArab(String num) {
@@ -112,29 +134,23 @@ public class Calculator {
         }
         return 0;
     }
-//    private static int toArab2(String num2) {
-//        switch (num2) {
-//            case "I":
-//                return 1;
-//            case "II":
-//                return 2;
-//            case "III":
-//                return 3;
-//            case "IV":
-//                return 4;
-//            case "V":
-//                return 5;
-//            case "VI":
-//                return 6;
-//            case "VII":
-//                return 7;
-//            case "VIII":
-//                return 8;
-//            case "IX":
-//                return 9;
-//            case "X":
-//                return 10;
-//        }
-//        return 0;
-//    }
+
+    public static String roman(int n) throws Exception{
+
+        if( n <= 0) {
+            throw new Exception("Отрицательное римское число");
+        }
+
+        StringBuilder buf = new StringBuilder();
+
+        final Numeral[] values = Numeral.values();
+        for (int i = values.length - 1; i >= 0; i--) {
+            while (n >= values[i].weight) {
+                buf.append(values[i]);
+                n -= values[i].weight;
+            }
+        }
+        return buf.toString();
+    }
+
 }
