@@ -34,27 +34,24 @@ public class Calculator {
         if (Arrays.asList(romeNumbers).contains(num1) && Arrays.asList(romeNumbers).contains(num2)){
             a = toArab1(num1);
             b = toArab2(num2);
-            if (a>b) {
-                switch (x) {
-                    case '+':
-                        result = a + b;
-                        break;
-                    case '-':
-                        result = a - b;
-                        break;
-                    case '*':
-                        result = a * b;
-                        break;
-                    case '/':
-                        result = a / b;
-                        break;
-                    default:
-                        result = 0;
-                        System.out.println("Ошибка");
-                }
-
+            switch (x) {
+                case '+':
+                    result = a + b;
+                    break;
+                case '-':
+                    result = a - b;
+                    break;
+                case '*':
+                    result = a * b;
+                    break;
+                case '/':
+                    result = a / b;
+                    break;
+                default:
+                    result = 0;
+                    System.out.println("Ошибка");
             }
-            else {
+            if (result<=0){
                 System.out.println("Ошибка");
             }
 
